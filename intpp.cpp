@@ -214,19 +214,12 @@ void execute(std::vector<uint8_t> code) {
     }
 }
 
-int main() {
-    std::vector<uint8_t> code = {
-        0x10,
-        't','e','s','t','Z','F',0x02,
-        // content
-        0x01, 0x02, 'h', 'e', 'l', 'l', 'o',
-        'Z','F',0x02,
-        'X','F',0x02,
-        0x11, 't','e','s','t',
-        'Z','F',0x02,
-
-        0x01,0x02,'t','Z','F',0x02
-    };
-    execute(code);
+int main(int argc, char* argv[]) {
+    if (argc == 2) {
+        std::vector<uint8_t> code = fout("program.intpp", std::ios::binary)
+        execute(code);
+    } else {
+        std::cerr << "incorrect argc count. correct usage: build.exe <filename.ix>"
+    }
     return 0;
 }
