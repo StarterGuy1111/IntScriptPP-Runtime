@@ -109,7 +109,7 @@ void execute(std::vector<uint8_t> code) {
                 }
                 break;
             }
-            case 0x10:  // Function definition
+            case 0x10:
                 {
                     std::vector<uint8_t> fname_bytes = read_until_marker(code, i);
                     std::string fname(fname_bytes.begin(), fname_bytes.end());
@@ -209,6 +209,7 @@ void execute(std::vector<uint8_t> code) {
                     }
                     break; // give me a break ._.
                 }
+            // yes alu is copy pasted from add
         }
     }
 }
