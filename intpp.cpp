@@ -13,7 +13,7 @@ bool is_marker_at(const std::vector<uint8_t>& code, size_t index, const std::vec
     return true;
 }
 
-std::vector<uint8_t> read_until_marker(const std::vector<uint8_t>& code, size_t& index, const std::vector<uint8_t>& marker = {'Z', 'F', 0x02}) {
+std::vector<uint8_t> read_until_marker(const std::vector<uint8_t>& code, size_t& index, const std::vector<uint8_t>& marker = {0x02,'Z', 'F'}) {
     std::vector<uint8_t> result;
 
     // Helper to check if marker is at index
@@ -57,8 +57,8 @@ bool is_xfmark_at(const std::vector<uint8_t>& code, size_t index, const std::vec
 
 
 void execute(std::vector<uint8_t> code) {
-    const std::vector<uint8_t> xfmark = {'X', 'F', 0x02};
-    const std::vector<uint8_t> zfmark = {'Z', 'F', 0x02};
+    const std::vector<uint8_t> xfmark = {0x02,'X', 'F'};
+    const std::vector<uint8_t> zfmark = {0x02,'Z', 'F'};
     std::unordered_map<std::string, std::string> variables;
     std::unordered_map<std::string, std::vector<uint8_t>> functions;
     size_t i = 0;
