@@ -214,12 +214,25 @@ void execute(std::vector<uint8_t> code) {
     }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     if (argc == 2) {
-        std::vector<uint8_t> code = fout("program.intpp", std::ios::binary)
+        std::ifstream fin(argv[1], std::ios::binary);
+
+        if (!fin) {
+            std::cerr << "err reading file";
+            return -1;
+        }
+
+        std::vector<uint8_t> code((std::istreambuf_iterator<char>(fin)),
+                               std::istreambuf_iterator<char>());
+
+        fin.close();
+
         execute(code);
+        return 0;
+        
     } else {
-        std::cerr << "incorrect argc count. correct usage: build.exe <filename.ix>"
+        std::cerr << "incorrect argc count. correct usage: build.exe <filename.ix>";
+        return -1;
     }
-    return 0;
 }
