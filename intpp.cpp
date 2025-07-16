@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include <math.h>
+#include <cstring>
 
 bool is_marker_at(const std::vector<uint8_t>& code, size_t index, const std::vector<uint8_t>& marker) {
     if (index + marker.size() > code.size()) return false;
@@ -215,6 +216,8 @@ void execute(std::vector<uint8_t> code) {
 }
 
 int main(int argc, char *argv[]) {
+    const std::vector<uint8_t> magic = {0x69, 0x78, 0x25, 0x05, 0x05};
+
     if (argc == 2) {
         std::ifstream fin(argv[1], std::ios::binary);
 
@@ -223,12 +226,18 @@ int main(int argc, char *argv[]) {
             return -1;
         }
 
-        std::vector<uint8_t> code((std::istreambuf_iterator<char>(fin)),
-                               std::istreambuf_iterator<char>());
+        std::vector<char> TEMP((std::istreambuf_iterator<char>(fin)),
+                         std::istreambuf_iterator<char>());
+        
+        std::vector<uint8_t> code(TEMP.begin(), TEMP.end());
 
         fin.close();
-
-        execute(code);
+        int magiccheck = std::memcmp(TEMP.data(), magic.data(), 5);
+        if (magiccheck==0) {
+            execute(code);
+        } else {
+            std::cerr << "sorry but as of build-1-0-4, now have to follow magic bytes:\n0x69, 0x78, 0x25, 0x05, 0x05";
+        }
         return 0;
         
     } else {
